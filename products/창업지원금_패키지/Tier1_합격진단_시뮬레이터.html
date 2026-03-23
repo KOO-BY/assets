@@ -1,120 +1,174 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>예비창업패키지 합격 타당성 극강 진단기 (Tier 1)</title>
-    <style>
-        body { font-family: 'Pretendard', 'Malgun Gothic', sans-serif; background-color: #0f172a; color: #f8fafc; margin: 0; padding: 40px; display: flex; justify-content: center; }
-        .container { max-width: 800px; width: 100%; background: #1e293b; padding: 45px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-top: 6px solid #fbbf24; }
-        h1 { font-size: 26px; font-weight: 800; color: #fcd34d; margin-bottom: 30px; text-align: center; }
-        .intro { color: #94a3b8; font-size: 14px; text-align: center; margin-bottom: 30px; line-height: 1.6; }
-        .question-box { background: #0f172a; padding: 25px; border-radius: 12px; margin-bottom: 25px; border: 1px solid #334155; }
-        .question-title { font-size: 16px; font-weight: 700; color: #f8fafc; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
-        .badge { background: #334155; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; color: #cbd5e1; }
-        .question-desc { font-size: 14px; color: #94a3b8; margin-bottom: 20px; line-height: 1.6; }
-        .slider-container { display: flex; align-items: center; gap: 20px; }
-        input[type="range"] { flex-grow: 1; accent-color: #fbbf24; cursor: pointer; }
-        .score-display { font-size: 20px; font-weight: bold; color: #0f172a; width: 50px; text-align: center; background: #fbbf24; padding: 8px; border-radius: 8px; }
-        button { width: 100%; padding: 20px; background: #fbbf24; color: #0f172a; font-weight: 900; border: none; border-radius: 12px; cursor: pointer; transition: 0.2s; font-size: 18px; margin-top: 15px; }
-        button:hover { background: #f59e0b; }
-        .result-box { margin-top: 35px; padding: 30px; border-radius: 12px; display: none; text-align: center; border: 2px solid transparent; }
-        .total-score { font-size: 42px; font-weight: 900; margin-bottom: 15px; }
-        .result-message { font-size: 18px; font-weight: 700; line-height: 1.6; }
-        .pass { background: rgba(34, 197, 94, 0.1); color: #4ade80; border-color: #22c55e; }
-        .warn { background: rgba(234, 179, 8, 0.1); color: #fde047; border-color: #eab308; }
-        .fail { background: rgba(239, 68, 68, 0.1); color: #fca5a5; border-color: #ef4444; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>예비창업패키지 생존확률 정밀 진단기 (Tier 1)</title>
+<style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: rgba(30, 41, 59, 0.7);
+        --accent: #3b82f6;
+        --accent-hover: #2563eb;
+        --text-main: #f8fafc;
+        --text-dim: #94a3b8;
+    }
+    body {
+        margin: 0; padding: 0;
+        font-family: 'Pretendard', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        display: flex; justify-content: center; align-items: center;
+        min-height: 100vh;
+        background-image: radial-gradient(circle at top right, #1e293b, #0f172a);
+    }
+    .app-container {
+        width: 100%; max-width: 600px;
+        background: var(--card-bg);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 16px; padding: 40px;
+        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        backdrop-filter: blur(10px);
+    }
+    h1 { font-size: 24px; margin-bottom: 10px; font-weight: 700; line-height: 1.3; }
+    .intro { font-size: 15px; color: var(--text-dim); margin-bottom: 30px; line-height: 1.6; }
+    .rubric-box {
+        background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; margin-bottom: 20px;
+        border-left: 4px solid var(--accent);
+    }
+    .rubric-title { font-weight: 600; font-size: 16px; margin-bottom: 8px; color: #60a5fa; }
+    .rubric-desc { font-size: 14px; color: #cbd5e1; margin-bottom: 15px; line-height: 1.5; }
+    select {
+        width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #475569;
+        background: #1e293b; color: white; font-family: 'Pretendard'; font-size: 15px; outline: none;
+    }
+    select:focus { border-color: var(--accent); }
+    button {
+        width: 100%; padding: 16px; background: var(--accent); color: white;
+        border: none; border-radius: 8px; font-size: 16px; font-weight: bold;
+        cursor: pointer; margin-top: 20px; transition: all 0.2s ease;
+    }
+    button:hover { background: var(--accent-hover); transform: translateY(-2px); }
+    #result-area {
+        margin-top: 30px; padding: 20px; border-radius: 8px; display: none;
+        background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+    .humanity-moat {
+        margin-top: 15px; padding: 15px; font-size: 13px; color: #fca5a5;
+        background: rgba(220, 38, 38, 0.1); border-radius: 6px;
+    }
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>🚨 심사위원 시점: K-Startup 1억 합격 커트라인 진단</h1>
-        <div class="intro">현직 심사위원들이 탈락자를 무자비하게 걸러내는 <b>[핵심 5구간 필터링]</b> 평가 기준표입니다.<br>단순한 아이디어 점수가 아닙니다. '객관적 데이터 증명 여부'로만 점수를 당기십시오.</div>
-        
-        <div class="question-box">
-            <div class="question-title">1. 타겟 문제의 정량적 심각성 측량 <span class="badge">Problem</span></div>
-            <div class="question-desc">"불편함을 느낍니다" 수준이 아니라, 이 문제 때문에 타겟 시장에서 연간 발생하는 <b>금전적/시간적 손실액(TAM 데이터)</b>을 외부 공신력 있는 논문이나 통계청 지표로 정확히 증명했습니까? (1: 단순 감 ~ 10: 완벽한 통계 논문 첨부)</div>
-            <div class="slider-container">
-                <input type="range" id="q1" min="1" max="10" value="5" oninput="updateScore('1')">
-                <div class="score-display" id="val1">5</div>
-            </div>
-        </div>
 
-        <div class="question-box">
-            <div class="question-title">2. 내부 개발 자급력 (CTO 존재 여부) <span class="badge">Team</span></div>
-            <div class="question-desc">지원금 5천만 원을 받아서 '외주 개발사'에 돈을 다 주려는 거격자입니까? 내부 팀원만으로 3개월 내에 돌아가는 <b>MVP(최소기능구현물)를 독자 코딩/제작할 실무진 포트폴리오</b>가 존재합니까?</div>
-            <div class="slider-container">
-                <input type="range" id="q2" min="1" max="10" value="5" oninput="updateScore('2')">
-                <div class="score-display" id="val2">5</div>
-            </div>
-        </div>
-
-        <div class="question-box">
-            <div class="question-title">3. 극초기 고객 검증 지표 (CBT/FGI) <span class="badge">Solution</span></div>
-            <div class="question-desc">"출시하면 잘 팔릴 것이다"라는 뇌피셜 대신, 랜딩페이지나 간단 프로토타입을 통해 <b>사전 모집된 잠재 유저 이메일/DB 풀이 최소 100명 이상</b> 확보되어 있습니까? 결제 전환율 데이터가 있습니까?</div>
-            <div class="slider-container">
-                <input type="range" id="q3" min="1" max="10" value="5" oninput="updateScore('3')">
-                <div class="score-display" id="val3">5</div>
-            </div>
-        </div>
-
-        <div class="question-box">
-            <div class="question-title">4. 고객 획득 비용 (CAC) vs 평생 가치 (LTV) <span class="badge">Scale-up</span></div>
-            <div class="question-desc">단순히 '인스타 광고를 하겠다'가 아닙니다. 고객 1명을 데려오는 비용(CAC)을 어떻게 1,000원 이하로 낮출 것인지, 그리고 그 고객이 떠나기 전까지 얼마(LTV)를 결제하게 할 것인지 <b>숫자로 계산된 명확한 수익 모델(BM) 공식</b>이 있습니까?</div>
-            <div class="slider-container">
-                <input type="range" id="q4" min="1" max="10" value="5" oninput="updateScore('4')">
-                <div class="score-display" id="val4">5</div>
-            </div>
-        </div>
-
-        <div class="question-box">
-            <div class="question-title">5. 진입 장벽 및 모방 불가성 (Moat) <span class="badge">Moat</span></div>
-            <div class="question-desc">대기업(네이버, 카카오)이 내일 당장 자본금 100억을 쏟아부어 똑같이 카피 앱을 만들었을 때, 당신의 팀이 <b>대기업을 이길 수 있는 단 1개의 고유한 무기</b>(특허, 독점 DB, 특정 폐쇄 커뮤니티 장악력 등)가 있습니까?</div>
-            <div class="slider-container">
-                <input type="range" id="q5" min="1" max="10" value="5" oninput="updateScore('5')">
-                <div class="score-display" id="val5">5</div>
-            </div>
-        </div>
-
-        <button onclick="calculateResult()">심판석 결과 조회: 내 사업계획서 생존 확률 판독</button>
-
-        <div id="resultBox" class="result-box">
-            <div class="total-score" id="totalScore">0점</div>
-            <div class="result-message" id="resultMessage">결과가 여기에 표시됩니다.</div>
-        </div>
+<div class="app-container">
+    <h1>🚀 1억 원 수주 생존확률<br>심사위원 5대 평가 기준표 진단 (Tier 1)</h1>
+    <div class="intro">
+        수많은 대표님들이 "아이디어가 좋다"는 착각만으로 서류를 내고 처참하게 탈락합니다. 아래 항목은 <b>현직 심사위원들이 탈락자를 무자비하게 걸러내는 5가지 절대 데이터 기준표</b>입니다. 감정은 배제하고 아주 냉혹하게 자가진단표를 체크해 보십시오.
     </div>
 
-    <script>
-        function updateScore(id) {
-            document.getElementById('val' + id).innerText = document.getElementById('q' + id).value;
-        }
+    <div id="quiz-form">
+        <!-- Q1 -->
+        <div class="rubric-box">
+            <div class="rubric-title">1. 고객 획득 비용(CAC) 대비 생애 가치(LTV) 계산</div>
+            <div class="rubric-desc">마케팅비 1만 원을 써서 데려온 고객이 최종적으로 3만 원 이상을 결제합니까? (비율 1:3 최소 기준)</div>
+            <select id="q1">
+                <option value="0">전혀 모른다. 그냥 아이디어만 있다.</option>
+                <option value="10">어느 정도 예상만 하고 있다.</option>
+                <option value="20">데이터로 명확히 증명 가능하며 LTV가 3배를 초과한다.</option>
+            </select>
+        </div>
 
-        function calculateResult() {
-            const sum = parseInt(document.getElementById('q1').value) + 
-                        parseInt(document.getElementById('q2').value) + 
-                        parseInt(document.getElementById('q3').value) + 
-                        parseInt(document.getElementById('q4').value) +
-                        parseInt(document.getElementById('q5').value);
-            
-            const resultBox = document.getElementById('resultBox');
-            const scoreEl = document.getElementById('totalScore');
-            const msgEl = document.getElementById('resultMessage');
+        <!-- Q2 -->
+        <div class="rubric-box">
+            <div class="rubric-title">2. 유효 시장(SAM) 타겟팅의 날카로움</div>
+            <div class="rubric-desc">"전 국민이 타겟입니다"라는 허무맹랑한 답 대신, 초기 1년 안에 도달 가능한 구체적 유효 시장(SAM) 지표와 매출 산출 근거를 댔습니까?</div>
+            <select id="q2">
+                <option value="0">그냥 시장이 크다고만 적었다.</option>
+                <option value="10">타겟층은 정했지만 구체적인 객단가와 파이 계산이 부족하다.</option>
+                <option value="20">SAM 지표가 원 단위까지 논리적으로 산출되어 있다.</option>
+            </select>
+            <div class="humanity-moat">
+                💡 <b>실제 피눈물 사례 (Humanity Moat)</b><br>
+                과거 한 개발자 대표님은 '대한민국 게임 시장 10조 원'만 믿고 시장 규모를 적었다가, "그래서 대표님이 당장 다음 달 만날 수 있는 1,000명의 결제 고객은 어디에 있습니까?"라는 심사위원의 질문에 3초간 얼어붙었고 그대로 탈락했습니다. 허상이 아닌 현실 데이터가 필요합니다.
+            </div>
+        </div>
 
-            scoreEl.innerText = sum + " / 50점";
-            resultBox.style.display = "block";
-            
-            resultBox.className = "result-box";
+        <!-- Q3 -->
+        <div class="rubric-box">
+            <div class="rubric-title">3. 극초기 MVP 트랙션(Traction) 검증 여부</div>
+            <div class="rubric-desc">완벽한 앱을 만들기 전, 랜딩 페이지나 카페 글로 10명 이상의 결제 의향(DB)을 돌려본 적이 있습니까?</div>
+            <select id="q3">
+                <option value="0">개발부터 끝나야 테스트를 할 수 있다.</option>
+                <option value="10">주변 지인들에게만 물어보고 좋다는 대답을 들었다.</option>
+                <option value="20">랜딩 페이지만으로 생면부지의 고객 전환율 데이터를 뽑아냈다.</option>
+            </select>
+        </div>
 
-            if (sum >= 43) {
-                resultBox.classList.add("pass");
-                msgEl.innerHTML = "🔥 <b>[상위 1% 서류 프리패스 확정]</b><br>완벽합니다. 평가 평가 기준표의 급소를 정확히 찌르고 있습니다. 즉시 (Tier 2 템플릿)의 뼈대에 이 데이터들을 꽂아 넣고, 대면 발표 심사를 준비하십시오.";
-            } else if (sum >= 28) {
-                resultBox.classList.add("warn");
-                msgEl.innerHTML = "⚠️ <b>[노란불 - 면접에서 탈탈 털릴 확률 80%]</b><br>서류는 붙을지 몰라도 면접관의 '숫자 압박' 질문 1개에 백지상태가 됩니다. 아이디어는 좋으나 증명 데이터(CBT, CAC)가 비어있습니다. (Tier 3 메가 프롬프트)를 통해 방어 논리를 10배 강화하십시오.";
-            } else {
-                resultBox.classList.add("fail");
-                msgEl.innerHTML = "❌ <b>[서류 광탈 100% - 심사위원 하품 유발 상태]</b><br>이대로 내면 심사위원의 3초 컷 휴지통행입니다. 돈 내고 외주 맡기려는 뻔한 플랫폼 아이템이며 검증 데이터가 하나도 없습니다. 처음부터 아이템을 피봇(Pivot)하십시오.";
-            }
-        }
-    </script>
+        <!-- Q4 -->
+        <div class="rubric-box">
+            <div class="rubric-title">4. 창업팀 기술 내재화 & 지분 방어막</div>
+            <div class="rubric-desc">외주 개발에 의존하지 않고 내부 팀원만으로 제품 핵심 기능을 구현할 수 있습니까?</div>
+            <select id="q4">
+                <option value="0">100% 외주사에 돈을 주고 맡겨야 한다.</option>
+                <option value="10">일부 기능만 내부 개발이 가능하지만 기획 위주다.</option>
+                <option value="20">핵심 기능 내재화가 완료되었고 팀워크가 단단하다.</option>
+            </select>
+        </div>
+
+        <!-- Q5 -->
+        <div class="rubric-box">
+            <div class="rubric-title">5. 진입 장벽 (Unfair Advantage)</div>
+            <div class="rubric-desc">가장 핵심입니다. 카카오나 네이버가 내일 당장 이 스펙으로 똑같이 만들면, 이길 수 있는 대표님만의 진정한 '차별성(특허, 독점망, 노하우)'이 있습니까?</div>
+            <select id="q5">
+                <option value="0">대기업이 들어오면 답이 없다. 선점 효과만 믿는다.</option>
+                <option value="10">약간의 노하우는 있지만 언제든 무너질 수 있다.</option>
+                <option value="20">진짜 내 살을 깎아 만든 절대 복제 불가한 해자(Moat)가 있다.</option>
+            </select>
+        </div>
+
+        <button onclick="calculateScore()">내 비즈니스 합격 확률 계산하기</button>
+    </div>
+
+    <div id="result-area">
+        <h2 id="res-title"></h2>
+        <div id="res-msg" style="font-size:15px; color:#e2e8f0; line-height:1.6;"></div>
+    </div>
+</div>
+
+<script>
+function calculateScore() {
+    let score = 0;
+    for(let i=1; i<=5; i++) {
+        score += parseInt(document.getElementById('q'+i).value);
+    }
+    
+    const resArea = document.getElementById('result-area');
+    const titleEl = document.getElementById('res-title');
+    const msgEl = document.getElementById('res-msg');
+    
+    resArea.style.display = 'block';
+    
+    if(score === 100) {
+        resArea.style.borderColor = "rgba(16, 185, 129, 0.5)";
+        resArea.style.background = "rgba(16, 185, 129, 0.1)";
+        titleEl.innerHTML = "🔥 상위 1% 확정 (점수: " + score + "점)";
+        msgEl.innerHTML = "당신은 이미 평가 기준표를 마스터한 괴물입니다. 지금 당장 예비창업패키지 합격 문장 템플릿(Tier 2 패키지)에 이 데이터들을 꽂아 넣고, 지원금을 쓸어 담을 준비만 하십시오. 당장 제출합시다.";
+    } else if(score >= 60) {
+        resArea.style.borderColor = "rgba(245, 158, 11, 0.5)";
+        resArea.style.background = "rgba(245, 158, 11, 0.1)";
+        titleEl.style.color = "#fbbf24";
+        titleEl.innerHTML = "⚠️ 서류 합격 커트라인 간당간당 (점수: " + score + "점)";
+        msgEl.innerHTML = "어느 정도 기본기는 갖추었으나, 대면 심사에서 심사위원의 날카로운 송곳 질문 하나에 멘탈이 나갈 위험 구간입니다. <b>심사위원 방어 프롬프트 팩(Tier 3)</b>을 통해 본인의 텅 빈 논리적 공백을 즉시 메우셔야 합니다.";
+    } else {
+        resArea.style.borderColor = "rgba(239, 68, 68, 0.5)";
+        resArea.style.background = "rgba(239, 68, 68, 0.1)";
+        titleEl.style.color = "#f87171";
+        titleEl.innerHTML = "☠️ 예창패 광탈 및 폐업 직전 (점수: " + score + "점)";
+        msgEl.innerHTML = "냉정하게 말씀드립니다. 지금 당장 쓰던 사업계획서 덮으십시오. 이대로 제출하면 심사위원들 안줏거리밖에 안 됩니다. 당신에게 절실한 것은 아이디어가 아니라 <b>시장을 거꾸로 역산하는 뼈대(Tier 2 임포트 팩)</b> 그 자체입니다. 바닥부터 구조를 다시 짜야 살 수 있습니다.";
+    }
+}
+</script>
 </body>
 </html>
