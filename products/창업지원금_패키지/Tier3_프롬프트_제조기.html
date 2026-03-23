@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>심사위원 브레인 해킹 프롬프트 (Tier 3)</title>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #020617; color: #f8fafc; margin: 0; padding: 40px; display: flex; justify-content: center; }
+        .container { max-width: 650px; background: #0f172a; padding: 35px; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.8); border: 1px solid #1e293b; border-top: 5px solid #a855f7; }
+        h1 { font-size: 24px; font-weight: 800; color: #c084fc; margin-bottom: 5px; }
+        .subtitle { color: #64748b; font-size: 13px; margin-bottom: 25px; line-height: 1.6; }
+        label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: bold; color: #e2e8f0; }
+        input { width: 100%; padding: 14px; margin-bottom: 25px; border: 1px solid #334155; border-radius: 8px; background: #1e293b; color: #f8fafc; box-sizing: border-box; font-size: 15px;}
+        input:focus { outline: none; border-color: #a855f7; box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.3); }
+        button { width: 100%; padding: 18px; background: linear-gradient(135deg, #9333ea, #a855f7); color: white; font-weight: 900; border: none; border-radius: 12px; cursor: pointer; transition: 0.3s; font-size: 16px; letter-spacing: 0.5px; }
+        button:hover { background: linear-gradient(135deg, #7e22ce, #9333ea); transform: translateY(-2px); }
+        .result-box { margin-top: 30px; padding: 20px; background: #1e293b; border: 1px solid #334155; border-left: 5px solid #a855f7; border-radius: 8px; display: none; }
+        .prompt-text { font-family: 'Consolas', monospace; font-size: 13px; color: #d8b4fe; white-space: pre-wrap; margin-bottom: 20px; line-height: 1.7; }
+        .copy-btn { width: auto; padding: 10px 15px; background: #475569; color: white; float: right; margin-bottom: 10px; font-size: 13px; border-radius: 6px; font-weight: bold; }
+        .copy-btn:hover { background: #64748b; }
+        .clearfix::after { content: ""; clear: both; display: table; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 K-Startup 심사위원 뇌구조 해킹 프롬프트</h1>
+        <div class="subtitle">실제 수석 평가자의 로직(TAM/SAM/SOM, LTV/CAC, GTM)을 기반으로, 당신의 아이템이 털릴 수밖에 없는 20개의 공격 포인트를 무기화합니다.</div>
+        
+        <label for="item">창업 아이템의 본질 (MVP 기능 및 타겟)</label>
+        <input type="text" id="item" placeholder="예: 시니어 디지털 문맹을 위한 음성 기반 AI 금융사기 방지 백신 앱">
+        
+        <label for="bm">가장 핵심이 되는 GTM 및 수익 모델(BM)</label>
+        <input type="text" id="bm" placeholder="예: 초기 노인복지관 무료 배포 후 가족 결합형 구독 과금 (월 4,900원)">
+
+        <button onclick="generatePrompt()">🔥 대면평가 압박면접 스크립트 무한 생성</button>
+
+        <div class="result-box clearfix" id="resultBox">
+            <div class="prompt-text" id="promptText"></div>
+            <button class="copy-btn" onclick="copyToClipboard()">📋 한 번에 복사하기</button>
+        </div>
+    </div>
+
+    <script>
+        function generatePrompt() {
+            const item = document.getElementById('item').value;
+            const bm = document.getElementById('bm').value;
+            
+            if(!item || !bm) {
+                alert("아이템과 GTM 모델을 반드시 입력해야 AI가 해킹 프롬프트를 조립할 수 있습니다.");
+                return;
+            }
+
+            const prompt = `[SYSTEM ROLE]
+당신은 대한민국 '예비창업패키지' 서류 평가 및 대면 발표 평가에 5년 연속 참여한 피도 눈물도 없는 '블랙 수석 심사위원'입니다. 당신은 감성팔이나 추상적인 비전을 극도로 혐오하며, 오직 타겟 시장(TAM/SAM/SOM), 고객 획득 비용(CAC), 생애 가치(LTV), 최소 기능 구현물(MVP) 검증 데이터, 경쟁사 대비 진입장벽(Moat)이라는 5가지 잔혹한 잣대로만 비즈니스를 찢어발깁니다.
+
+[USER CONTEXT]
+현재 제가 정부지원금 5,000만 원 수주를 위해 제출할 아이템 지표는 다음과 같습니다.
+1. 핵심 솔루션: ${item}
+2. 초기 GTM 및 BM: ${bm}
+
+[TASK 1: 약점 해체 분석 (Tear-down)]
+위 비즈니스 모델을 보고, 수석 심사위원인 당신이 봤을 때 '기술적(Tech), 재무적(Financial), 마케팅적(Marketing)' 측면에서 당장 탈락을 줄 수밖에 없는 가장 치명적인 약점 5가지를 매섭게 지적하세요.
+
+[TASK 2: 압박 면접 20선 + 완벽 방어 스크립트 작성]
+대면 평가 현장 Q&A 시간에 심사위원들이 나에게 꽂을 법한 가장 악의적이고 날카로운 [압박 질문 20개]를 만드십시오. 
+그리고 각 질문에 대해, 내가 실제 수치와 데이터를 앞세워 심사위원의 고개를 끄덕이게 만들 구체적인 [답변 대본(15초 분량)]을 엑셀 매크로 형식의 마크다운 표로 정리해 주십시오. (답변에는 반드시 구체적인 퍼센트(%), 금액, 검증 수치 예시가 포함되어야 합니다.)`;
+
+            document.getElementById('promptText').innerText = prompt;
+            document.getElementById('resultBox').style.display = 'block';
+        }
+
+        function copyToClipboard() {
+            const text = document.getElementById('promptText').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("완벽한 압박 면접 프롬프트가 복사되었습니다. Claude 3.5 Sonnet이나 ChatGPT-4o에 즉시 붙여넣어 사업계획서의 빈틈을 메우십시오.");
+            });
+        }
+    </script>
+</body>
+</html>
